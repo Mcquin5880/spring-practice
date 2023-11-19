@@ -22,7 +22,7 @@ public class BeerServiceImpl implements BeerService {
         Beer beer1 = Beer.builder()
                 .id(UUID.randomUUID())
                 .version(1)
-                .beerName("Galaxy Cat")
+                .name("Galaxy Cat")
                 .beerStyle(BeerStyle.PALE_ALE)
                 .upc("12356")
                 .price(new BigDecimal("12.99"))
@@ -34,7 +34,7 @@ public class BeerServiceImpl implements BeerService {
         Beer beer2 = Beer.builder()
                 .id(UUID.randomUUID())
                 .version(1)
-                .beerName("Crank")
+                .name("Crank")
                 .beerStyle(BeerStyle.PALE_ALE)
                 .upc("12356222")
                 .price(new BigDecimal("11.99"))
@@ -46,7 +46,7 @@ public class BeerServiceImpl implements BeerService {
         Beer beer3 = Beer.builder()
                 .id(UUID.randomUUID())
                 .version(1)
-                .beerName("Sunshine City")
+                .name("Sunshine City")
                 .beerStyle(BeerStyle.IPA)
                 .upc("12356")
                 .price(new BigDecimal("13.99"))
@@ -80,7 +80,7 @@ public class BeerServiceImpl implements BeerService {
                 .createdDate(LocalDateTime.now())
                 .updateDate(LocalDateTime.now())
                 .version(1)
-                .beerName(beer.getBeerName())
+                .name(beer.getName())
                 .beerStyle(beer.getBeerStyle())
                 .quantityOnHand(beer.getQuantityOnHand())
                 .upc(beer.getUpc())
@@ -89,5 +89,21 @@ public class BeerServiceImpl implements BeerService {
 
         beerMap.put(savedBeer.getId(), savedBeer);
         return savedBeer;
+    }
+
+    @Override
+    public void updateBeerById(UUID id, Beer beer) {
+        Beer existing = beerMap.get(id);
+        existing.setName(beer.getName());
+        existing.setPrice(beer.getPrice());
+        existing.setUpc(beer.getUpc());
+        existing.setQuantityOnHand(beer.getQuantityOnHand());
+
+        beerMap.put(existing.getId(), existing);
+    }
+
+    @Override
+    public void deleteBeerById(UUID id) {
+        beerMap.remove(id);
     }
 }

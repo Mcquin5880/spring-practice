@@ -35,4 +35,16 @@ public class CustomerController {
         headers.add("Location", "/api/v1/customer/" + savedCustomer.getId());
         return new ResponseEntity(headers, HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity updateCustomerById(@PathVariable UUID id, @RequestBody Customer customer) {
+        customerService.updateCustomerById(id, customer);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteCustomerById(@PathVariable UUID id) {
+        customerService.deleteCustomerById(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 }

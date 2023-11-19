@@ -13,4 +13,7 @@ public interface CustomerService {
 
     Customer createCustomer(Customer customer);
 
+    void updateCustomerById(UUID id, Customer customer);
+
+    void deleteCustomerById(UUID id);
 }
