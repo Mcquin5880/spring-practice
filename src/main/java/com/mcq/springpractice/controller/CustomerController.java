@@ -1,5 +1,6 @@
 package com.mcq.springpractice.controller;
 
+import com.mcq.springpractice.exception.NotFoundException;
 import com.mcq.springpractice.model.CustomerDTO;
 import com.mcq.springpractice.services.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public CustomerDTO getCustomerById(@PathVariable UUID id) {
-        return customerService.getCustomerById(id);
+        return customerService.getCustomerById(id).orElseThrow(NotFoundException::new);
     }
 
     @PostMapping
