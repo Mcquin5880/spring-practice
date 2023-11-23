@@ -1,7 +1,7 @@
 package com.mcq.springpractice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mcq.springpractice.model.Beer;
+import com.mcq.springpractice.model.BeerDTO;
 import com.mcq.springpractice.services.BeerService;
 import com.mcq.springpractice.services.BeerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +45,7 @@ class BeerControllerTest {
 
     @Test
     void testGetBeerById() throws Exception {
-        Beer testBeer = beerServiceImpl.listBeers().get(0);
+        BeerDTO testBeer = beerServiceImpl.listBeers().get(0);
         given(beerService.getBeerById(testBeer.getId())).willReturn(Optional.of(testBeer));
 
         mockMvc.perform(get("/api/v1/beer/" + testBeer.getId())
@@ -76,11 +76,11 @@ class BeerControllerTest {
 
     @Test
     void testCreateNewBeer() throws Exception {
-        Beer beer = beerServiceImpl.listBeers().get(0);
+        BeerDTO beer = beerServiceImpl.listBeers().get(0);
         beer.setId(null);
         beer.setVersion(null);
 
-        given(beerService.createBeer(any(Beer.class))).willReturn(beerServiceImpl.listBeers().get(1));
+        given(beerService.createBeer(any(BeerDTO.class))).willReturn(beerServiceImpl.listBeers().get(1));
 
         mockMvc.perform(post("/api/v1/beer")
                         .accept(MediaType.APPLICATION_JSON)
@@ -92,7 +92,7 @@ class BeerControllerTest {
 
     @Test
     void testUpdateBeer() throws Exception {
-        Beer beer = beerServiceImpl.listBeers().get(0);
+        BeerDTO beer = beerServiceImpl.listBeers().get(0);
 
         mockMvc.perform(put("/api/v1/beer/" + beer.getId())
                         .accept(MediaType.APPLICATION_JSON)
@@ -100,12 +100,12 @@ class BeerControllerTest {
                         .content(objectMapper.writeValueAsString(beer)))
                 .andExpect(status().isNoContent());
 
-        verify(beerService).updateBeerById(any(UUID.class), any(Beer.class));
+        verify(beerService).updateBeerById(any(UUID.class), any(BeerDTO.class));
     }
 
     @Test
     void testDeleteBeer() throws Exception {
-        Beer beer = beerServiceImpl.listBeers().get(0);
+        BeerDTO beer = beerServiceImpl.listBeers().get(0);
 
         mockMvc.perform(delete("/api/v1/beer/" + beer.getId())
                 .accept(MediaType.APPLICATION_JSON))

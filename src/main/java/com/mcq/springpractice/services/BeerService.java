@@ -1,6 +1,6 @@
 package com.mcq.springpractice.services;
 
-import com.mcq.springpractice.model.Beer;
+import com.mcq.springpractice.model.BeerDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,13 +8,13 @@ import java.util.UUID;
 
 public interface BeerService {
 
-    List<Beer> listBeers();
+    List<BeerDTO> listBeers();
 
-    Optional<Beer> getBeerById(UUID id);
+    Optional<BeerDTO> getBeerById(UUID id);
 
-    Beer createBeer(Beer beer);
+    BeerDTO createBeer(BeerDTO beer);
 
-    void updateBeerById(UUID id, Beer beer);
+    void updateBeerById(UUID id, BeerDTO beer);
 
     void deleteBeerById(UUID id);
 }

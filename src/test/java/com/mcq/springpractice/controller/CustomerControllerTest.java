@@ -2,7 +2,7 @@ package com.mcq.springpractice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mcq.springpractice.exception.NotFoundException;
-import com.mcq.springpractice.model.Customer;
+import com.mcq.springpractice.model.CustomerDTO;
 import com.mcq.springpractice.services.CustomerService;
 import com.mcq.springpractice.services.CustomerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +45,7 @@ class CustomerControllerTest {
 
     @Test
     void testGetCustomerById() throws Exception {
-        Customer testCustomer = customerServiceImpl.listCustomers().get(0);
+        CustomerDTO testCustomer = customerServiceImpl.listCustomers().get(0);
         given(customerService.getCustomerById(testCustomer.getId())).willReturn(testCustomer);
 
         mockMvc.perform(get("/api/v1/customer/" + testCustomer.getId())
@@ -77,11 +77,11 @@ class CustomerControllerTest {
 
     @Test
     void testCreateCustomer() throws Exception {
-        Customer customer = customerServiceImpl.listCustomers().get(0);
+        CustomerDTO customer = customerServiceImpl.listCustomers().get(0);
         customer.setId(null);
         customer.setVersion(null);
 
-        given(customerService.createCustomer(any(Customer.class))).willReturn(customerServiceImpl.listCustomers().get(1));
+        given(customerService.createCustomer(any(CustomerDTO.class))).willReturn(customerServiceImpl.listCustomers().get(1));
 
         mockMvc.perform(post("/api/v1/customer")
                         .accept(MediaType.APPLICATION_JSON)
@@ -93,7 +93,7 @@ class CustomerControllerTest {
 
     @Test
     void testUpdateCustomer() throws Exception {
-        Customer customer = customerServiceImpl.listCustomers().get(0);
+        CustomerDTO customer = customerServiceImpl.listCustomers().get(0);
 
         mockMvc.perform(put("/api/v1/customer/" + customer.getId())
                         .accept(MediaType.APPLICATION_JSON)
@@ -101,12 +101,12 @@ class CustomerControllerTest {
                         .content(objectMapper.writeValueAsString(customer)))
                 .andExpect(status().isNoContent());
 
-        verify(customerService).updateCustomerById(any(UUID.class), any(Customer.class));
+        verify(customerService).updateCustomerById(any(UUID.class), any(CustomerDTO.class));
     }
 
     @Test
     void testDeleteCustomer() throws Exception {
-        Customer customer = customerServiceImpl.listCustomers().get(0);
+        CustomerDTO customer = customerServiceImpl.listCustomers().get(0);
 
         mockMvc.perform(delete("/api/v1/customer/" + customer.getId())
                 .accept(MediaType.APPLICATION_JSON))

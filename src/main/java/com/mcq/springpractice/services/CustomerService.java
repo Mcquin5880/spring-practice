@@ -1,19 +1,19 @@
 package com.mcq.springpractice.services;
 
-import com.mcq.springpractice.model.Customer;
+import com.mcq.springpractice.model.CustomerDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface CustomerService {
 
-    List<Customer> listCustomers();
+    List<CustomerDTO> listCustomers();
 
-    Customer getCustomerById(UUID id);
+    CustomerDTO getCustomerById(UUID id);
 
-    Customer createCustomer(Customer customer);
+    CustomerDTO createCustomer(CustomerDTO customer);
 
-    void updateCustomerById(UUID id, Customer customer);
+    void updateCustomerById(UUID id, CustomerDTO customer);
 
     void deleteCustomerById(UUID id);
 }

@@ -1,7 +1,7 @@
 package com.mcq.springpractice.controller;
 
 import com.mcq.springpractice.exception.NotFoundException;
-import com.mcq.springpractice.model.Beer;
+import com.mcq.springpractice.model.BeerDTO;
 import com.mcq.springpractice.services.BeerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -20,25 +20,25 @@ public class BeerController {
     private final BeerService beerService;
 
     @GetMapping
-    public List<Beer> listBeers() {
+    public List<BeerDTO> listBeers() {
         return beerService.listBeers();
     }
 
     @GetMapping("/{id}")
-    public Beer getBeerById(@PathVariable UUID id) {
+    public BeerDTO getBeerById(@PathVariable UUID id) {
         return beerService.getBeerById(id).orElseThrow(NotFoundException::new);
     }
 
     @PostMapping
-    public ResponseEntity createBeer(@RequestBody Beer beer) {
-        Beer savedBeer = beerService.createBeer(beer);
+    public ResponseEntity createBeer(@RequestBody BeerDTO beer) {
+        BeerDTO savedBeer = beerService.createBeer(beer);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/v1/beer/" + savedBeer.getId());
         return new ResponseEntity(headers, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateBeerById(@PathVariable UUID id, @RequestBody Beer beer) {
+    public ResponseEntity updateBeerById(@PathVariable UUID id, @RequestBody BeerDTO beer) {
         beerService.updateBeerById(id, beer);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
