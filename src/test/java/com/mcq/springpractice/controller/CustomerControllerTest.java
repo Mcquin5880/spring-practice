@@ -1,6 +1,7 @@
 package com.mcq.springpractice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mcq.springpractice.exception.NotFoundException;
 import com.mcq.springpractice.model.Customer;
 import com.mcq.springpractice.services.CustomerService;
 import com.mcq.springpractice.services.CustomerServiceImpl;
@@ -53,6 +54,14 @@ class CustomerControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(testCustomer.getId().toString())))
                 .andExpect(jsonPath("$.name", is(testCustomer.getName())));
+    }
+
+    @Test
+    void testGetCustomerByIdNotFound() throws Exception {
+        given(customerService.getCustomerById(any(UUID.class))).willThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/api/v1/customer" + UUID.randomUUID()))
+                .andExpect(status().isNotFound());
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.mcq.springpractice.controller;
 
+import com.mcq.springpractice.exception.NotFoundException;
 import com.mcq.springpractice.model.Beer;
 import com.mcq.springpractice.services.BeerService;
 import lombok.RequiredArgsConstructor;
@@ -25,14 +26,14 @@ public class BeerController {
 
     @GetMapping("/{id}")
     public Beer getBeerById(@PathVariable UUID id) {
-        return beerService.getBeerById(id);
+        return beerService.getBeerById(id).orElseThrow(NotFoundException::new);
     }
 
     @PostMapping
     public ResponseEntity createBeer(@RequestBody Beer beer) {
         Beer savedBeer = beerService.createBeer(beer);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/api/v1/beer/" + savedBeer.getId().toString());
+        headers.add("Location", "/api/v1/beer/" + savedBeer.getId());
         return new ResponseEntity(headers, HttpStatus.CREATED);
     }
 
