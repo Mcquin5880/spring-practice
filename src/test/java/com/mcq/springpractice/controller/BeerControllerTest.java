@@ -3,7 +3,7 @@ package com.mcq.springpractice.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mcq.springpractice.model.BeerDTO;
 import com.mcq.springpractice.services.BeerService;
-import com.mcq.springpractice.services.BeerServiceImpl;
+import com.mcq.springpractice.services.mapimpl.BeerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

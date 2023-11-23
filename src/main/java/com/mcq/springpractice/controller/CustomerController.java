@@ -39,13 +39,17 @@ public class CustomerController {
 
     @PutMapping("/{id}")
     public ResponseEntity updateCustomerById(@PathVariable UUID id, @RequestBody CustomerDTO customer) {
-        customerService.updateCustomerById(id, customer);
+        if (customerService.updateCustomerById(id, customer).isEmpty()) {
+            throw new NotFoundException();
+        }
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteCustomerById(@PathVariable UUID id) {
-        customerService.deleteCustomerById(id);
+        if (!customerService.deleteCustomerById(id)) {
+            throw new NotFoundException();
+        }
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

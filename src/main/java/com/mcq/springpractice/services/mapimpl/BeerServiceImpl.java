@@ -1,7 +1,8 @@
-package com.mcq.springpractice.services;
+package com.mcq.springpractice.services.mapimpl;
 
 import com.mcq.springpractice.model.BeerDTO;
 import com.mcq.springpractice.model.BeerStyle;
+import com.mcq.springpractice.services.BeerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

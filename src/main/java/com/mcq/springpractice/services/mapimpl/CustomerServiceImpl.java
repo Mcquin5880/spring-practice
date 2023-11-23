@@ -1,6 +1,7 @@
-package com.mcq.springpractice.services;
+package com.mcq.springpractice.services.mapimpl;
 
 import com.mcq.springpractice.model.CustomerDTO;
+import com.mcq.springpractice.services.CustomerService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -61,15 +62,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void updateCustomerById(UUID id, CustomerDTO customer) {
+    public Optional<CustomerDTO> updateCustomerById(UUID id, CustomerDTO customer) {
         CustomerDTO existing = customerMap.get(id);
         existing.setName(customer.getName());
         customerMap.put(existing.getId(), existing);
+        return Optional.of(existing);
     }
 
     @Override
-    public void deleteCustomerById(UUID id) {
+    public Boolean deleteCustomerById(UUID id) {
         customerMap.remove(id);
+        return true;
     }
 
 }
