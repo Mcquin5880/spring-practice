@@ -2,6 +2,7 @@ package com.mcq.springpractice.controller;
 
 import com.mcq.springpractice.exception.NotFoundException;
 import com.mcq.springpractice.model.BeerDTO;
+import com.mcq.springpractice.model.BeerStyle;
 import com.mcq.springpractice.services.BeerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -21,8 +22,10 @@ public class BeerController {
     private final BeerService beerService;
 
     @GetMapping
-    public List<BeerDTO> listBeers() {
-        return beerService.listBeers();
+    public List<BeerDTO> listBeers(@RequestParam(required = false) String beerName,
+                                   @RequestParam(required = false) BeerStyle beerStyle,
+                                   @RequestParam(required = false) Boolean showInventory) {
+        return beerService.listBeers(beerName, beerStyle, showInventory);
     }
 
     @GetMapping("/{id}")
